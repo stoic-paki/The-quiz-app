@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="points-cont"><h3 id="points">Points:10</h3></div>
+        <div class="hearts-cont"><h3 id="hearts">Hearts:3</h3></div>
+        <div class="hearts-cont"><h3 id="q-list"></h3><span>/10</span></div>
+    </nav>
+    <div class="container">
+        <h2 id="question">What is the capital of France?</h2>
+        <div class="option-cont">
+            <div class="options" id="option1" onclick="returnClicked1()">Berlin</div>
+            <div class="options" id="option2" onclick="returnClicked2()">New Delhi</div>
+            <div class="options" id="option3" onclick="returnClicked3()">Mexico</div>
+            <div class="options" id="option4" onclick="returnClicked4()">Paris</div>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>
