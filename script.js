@@ -94,20 +94,22 @@ let option_1 = document.querySelector("#option1")
 let option_2 = document.querySelector("#option2")
 let option_3 = document.querySelector("#option3")
 let option_4 = document.querySelector("#option4")
-let retry = document.querySelector(".retry-btn")
-let p = 0
-let n = 1
 let lives = 3
+let numberOfQuestions = 1
+let question_list_index = 0
 let option;
 let points = 0
+let retry = document.querySelector(".retry-btn")
 function ifWon() {
-    if (n === 10) {
+    if (numberOfQuestions === 10) {
         window.location.href =
             "./youWon.html"
         console.log("you won my nigga")
     }
 }
-
+function redo(){
+    window.location.href="./index.html"
+}
 
 // scoreStore.textContent = 1
 // console.log(n)
@@ -120,9 +122,7 @@ option_1.addEventListener("click", logic)
 option_2.addEventListener("click", logic)
 option_3.addEventListener("click", logic)
 option_4.addEventListener("click", logic)
-// retry.addEventListener("click", () => {
-// window.location.href ="./index.html"
-// })
+
 
 // these functions tell us what option the user clicked. 
 
@@ -145,19 +145,17 @@ function returnClicked4() {
 
 function logic() {
     ifWon()
-    n++
-    console.log(n)
-    if (n <= 11) {
+    numberOfQuestions++
+    if (numberOfQuestions <= 11) {
         if (lives > 1) {
-            check_answer(p)
-            p++
-            if (n <= 10) {
-                render(p)
+            check_answer(question_list_index)
+            question_list_index++
+            if (numberOfQuestions <= 10) {
+                render(question_list_index)
             }
         }
         else {
             isAlive = false
-            console.log("you dead nigga")
             window.location.href =
                 "./gameOver.html"
             heartStore.textContent = "you dead"
@@ -171,7 +169,7 @@ function logic() {
 
 function render(q) {
     heartStore.textContent = lives
-    qList.textContent = n
+    qList.textContent = numberOfQuestions
     question.textContent = quizQuestions[q].question
     option_1.textContent = quizQuestions[q].option1
     option_2.textContent = quizQuestions[q].option2
@@ -180,7 +178,7 @@ function render(q) {
     scoreStore.textContent = points
 }
 
-render(p)
+render(question_list_index)
 
 function check_answer(q) {
     if (option == quizQuestions[q].answer) {
