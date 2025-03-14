@@ -81,10 +81,12 @@ const quizQuestions = [
     }
 ];
 
+// initializing everything
+
 let isAlive = true
 let score = 0;
 let hearts = 3;
-const qList=document.querySelector("#q-list")
+const qList = document.querySelector("#q-list")
 let scoreStore = document.querySelector("#points");
 let heartStore = document.querySelector("#hearts");
 let question = document.querySelector("#question");
@@ -92,70 +94,101 @@ let option_1 = document.querySelector("#option1")
 let option_2 = document.querySelector("#option2")
 let option_3 = document.querySelector("#option3")
 let option_4 = document.querySelector("#option4")
+let retry = document.querySelector(".retry-btn")
 let p = 0
 let n = 1
+let lives = 3
 let option;
-console.log(n)
+let points = 0
+function ifWon() {
+    if (n === 10) {
+        window.location.href =
+            "./youWon.html"
+        console.log("you won my nigga")
+    }
+}
+
+
+// scoreStore.textContent = 1
+// console.log(n)
+
+//event listeners to access logic function which checks if the answer is correct and calls render
+//which renders the next question when p is incremented. 
+//event listeners were needed because onclick object is being used to return option from the object. 
 
 option_1.addEventListener("click", logic)
 option_2.addEventListener("click", logic)
 option_3.addEventListener("click", logic)
 option_4.addEventListener("click", logic)
+// retry.addEventListener("click", () => {
+// window.location.href ="./index.html"
+// })
 
-function returnClicked1(){
+// these functions tell us what option the user clicked. 
+
+function returnClicked1() {
     option = 'option1'
-    // console.log("hello")
     return option
 }
-function returnClicked2(){
+function returnClicked2() {
     option = "option2"
-    // console.log("hello")
     return option
 }
-function returnClicked3(){
+function returnClicked3() {
     option = "option3"
-    // console.log("hello")
     return option
 }
-function returnClicked4(){
+function returnClicked4() {
     option = "option4"
-    // console.log("hello")
     return option
 }
 
-function logic(){
-    check_answer(p)
-    n++ 
-    if(n<=quizQuestions.length){
-        console.log('p is less than or equal to 10')
-        check_answer(p)
-        p++
-        render(p)   
-        // console.log("logic ran")
+function logic() {
+    ifWon()
+    n++
+    console.log(n)
+    if (n <= 11) {
+        if (lives > 1) {
+            check_answer(p)
+            p++
+            if (n <= 10) {
+                render(p)
+            }
+        }
+        else {
+            isAlive = false
+            console.log("you dead nigga")
+            window.location.href =
+                "./gameOver.html"
+            heartStore.textContent = "you dead"
+        }
     }
- 
+    else (
+        console.log('out of questions')
+    )
 }
 
 
-function render(q){
-    qList.textContent=n
-    question.textContent= quizQuestions[q].question
-    option_1.textContent=quizQuestions[q].option1
-    option_2.textContent=quizQuestions[q].option2
-    option_3.textContent=quizQuestions[q].option3
-    option_4.textContent=quizQuestions[q].option4
+function render(q) {
+    heartStore.textContent = lives
+    qList.textContent = n
+    question.textContent = quizQuestions[q].question
+    option_1.textContent = quizQuestions[q].option1
+    option_2.textContent = quizQuestions[q].option2
+    option_3.textContent = quizQuestions[q].option3
+    option_4.textContent = quizQuestions[q].option4
+    scoreStore.textContent = points
 }
 
 render(p)
 
-function check_answer(q){
-if(n<=quizQuestions.length){
-    console.log(n, quizQuestions.length)
-    if(option==quizQuestions[q].answer){
-        console.log('correct')
+function check_answer(q) {
+    if (option == quizQuestions[q].answer) {
+        console.log('correct', points)
+        points = points + 1
+    }
+    else {
+        lives = lives - 1
     }
 }
-else(
-    console.log('out of questions', n)
-)
-}
+
